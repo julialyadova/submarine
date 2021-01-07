@@ -32,4 +32,23 @@ public class FuelTank : SubmarinePart
     {
         _fuel = Capacity;
     }
+
+    protected override void OnBreak()
+    {
+        base.OnBreak();
+        _fuel = 0;
+    }
+
+    protected override void OnDamageRecieved(float damage)
+    {
+        base.OnDamageRecieved(damage);
+        if (CurrentDurability > TotalDurability / 2)
+        {
+            _fuel -= 2;
+        }
+        else
+        {
+            _fuel -= 2 + (int)damage;
+        }
+    }
 }
