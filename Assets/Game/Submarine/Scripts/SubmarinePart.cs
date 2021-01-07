@@ -7,20 +7,18 @@ public class SubmarinePart : MonoBehaviour
     public int CurrentDurability = 10;
     public int Mass;
 
-    void Start()
-    {
-    }
-
     public int RecieveDamage(int damage)
     {
         if (damage < CurrentDurability)
         {
             CurrentDurability -= damage;
+            OnDamageRecieved(damage);
         }
         else
         {
             damage = CurrentDurability;
             CurrentDurability = 0;
+            OnBreak();
         }
         return damage;
     }
@@ -28,5 +26,15 @@ public class SubmarinePart : MonoBehaviour
     public void Repair()
     {
         CurrentDurability = TotalDurability;
+    }
+
+    protected virtual void OnBreak()
+    {
+
+    }
+
+    protected virtual void OnDamageRecieved(float damage)
+    {
+
     }
 }

@@ -1,12 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Propeller : SubmarinePart
+public class DivingPlane : SubmarinePart
 {
-    public float Force;
-    public float RotateSpeed;
-    public int FuelPerSecond;
+    public int Force = 400;
+    public int FuelPerSecond = 3;
+    public KeyCode KeyUp = KeyCode.Space;
+    public KeyCode KeyDown = KeyCode.LeftControl;
 
     private Submarine _submarine;
     private Rigidbody _submarineRigidbody;
@@ -24,15 +24,13 @@ public class Propeller : SubmarinePart
     private void Update()
     {
         if (_hasFuel)
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyUp))
             {
-                _submarineRigidbody.AddForce(_submarine.transform.forward * Force * Time.deltaTime);
-                transform.Rotate(Vector3.forward, RotateSpeed * Time.deltaTime);
+                _submarineRigidbody.AddForce(Vector3.up * Force * Time.deltaTime);
             }
-            else if (Input.GetKey(KeyCode.S))
+            else if (Input.GetKey(KeyDown))
             {
-                _submarineRigidbody.AddForce(_submarine.transform.forward * -Force * Time.deltaTime);
-                transform.Rotate(Vector3.back, RotateSpeed * Time.deltaTime);
+                _submarineRigidbody.AddForce(Vector3.up * -Force * 1.6f * Time.deltaTime);
             }
     }
     private IEnumerator OneSecondCoroutine()
@@ -46,9 +44,9 @@ public class Propeller : SubmarinePart
 
     private void ConsumeFuel()
     {
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyUp) || Input.GetKey(KeyDown))
             _hasFuel = _submarine.TakeFuel(FuelPerSecond) != 0;
         else if (_hasFuel)
-            _hasFuel = false;          
+            _hasFuel = false;
     }
 }

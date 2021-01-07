@@ -5,6 +5,9 @@ public class Rudder : SubmarinePart
     public float RotateAngle = 10f;
     public float Mobility = 0.1f;
 
+    public KeyCode KeyLeft = KeyCode.A;
+    public KeyCode KeyRight = KeyCode.D;
+
     private Submarine _submarine;
     private Rigidbody _submarineRigidbody;
 
@@ -18,10 +21,10 @@ public class Rudder : SubmarinePart
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyLeft))
             TurnLeft();
 
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyRight))
             TurnRight();
     }
 
